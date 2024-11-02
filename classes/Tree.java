@@ -20,8 +20,13 @@ public class Tree {
 
     Node raiz;
 
+    public Tree(int valor) {
+        this.raiz = new Node(valor);
+    }
+
+    // Questão 2
     public void addNo(Boolean dir, int valor, Node refNo) {
-        
+
         Node novoNode = new Node(valor);
 
         if (dir == true) {
@@ -32,23 +37,45 @@ public class Tree {
 
     }
 
+    // Questão 3
+    public Boolean randomBoolean() {
+        return (new Random().nextBoolean());
+    }
+
+    // Questão 3
     public Node localizarNoIncompleto() {
+        return localizaFolhaRecursivo(this.raiz);
+    }
 
-        Random random = new Random();
-        Node nodeAlvo = this.raiz;
-        Boolean existeEsquerda = nodeAlvo.direita != null;
-        Boolean existeDireita = nodeAlvo.esquerda != null;
+    // Questão 3
+    private Node localizaFolhaRecursivo(Node node) {
 
-        while (existeEsquerda && existeDireita) {
-            if (random.nextBoolean()) {
-                nodeAlvo = nodeAlvo.direita;
-            } else {
-                nodeAlvo = nodeAlvo.esquerda;
-            }
+        if (node.direita == null && node.esquerda == null) {
+            return node;
         }
 
-        return nodeAlvo;
+        else if (node.direita != null && node.esquerda != null) {
+            return this.randomBoolean() ? this.localizaFolhaRecursivo(node.direita)
+                    : this.localizaFolhaRecursivo(node.esquerda);
+        }
+
+        else {
+            return (node.direita != null) ? this.localizaFolhaRecursivo(node.direita)
+                    : this.localizaFolhaRecursivo(node.esquerda);
+        }
 
     }
-    
+
+    public void printPreOrder() {
+        this.printPreOrderRecursive(this.raiz);
+    }
+
+    private void printPreOrderRecursive(Node node) {
+        if (node != null) {
+            System.out.printf(node.valor + " ");
+            this.printPreOrderRecursive(node.esquerda);
+            this.printPreOrderRecursive(node.direita);
+        }
+    }
+
 }
