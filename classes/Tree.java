@@ -85,6 +85,20 @@ public class Tree {
         }
     }
 
+    public void addLista(Lista lista) {
+
+        Bloco aux = lista.inicio;
+
+        while (aux != null) {
+            this.addNo(
+                    this.randomBoolean(),
+                    aux.valor,
+                    this.localizarNoIncompleto());
+            aux = aux.prox;
+        }
+
+    }
+
     public void printPreOrder() {
         this.printPreOrderRecursive(this.raiz);
     }

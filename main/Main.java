@@ -1,4 +1,5 @@
 package main;
+import classes.Lista;
 import classes.Tree;
 
 @SuppressWarnings("unused")
@@ -8,10 +9,16 @@ public class Main {
 
         Tree tree = new Tree(21);
 
-        tree.addNo(false, 5, tree.localizarNoIncompleto());
-        tree.addNo(true, 6, tree.localizarNoIncompleto());
-        tree.addNo(false, 7, tree.localizarNoIncompleto());
-        tree.addNo(true, 8, tree.localizarNoIncompleto());
+        Lista lista = new Lista();
+
+        lista.addElemento(21, true);
+        lista.addElemento(18, true);
+        lista.addElemento(15, true);
+        lista.addElemento(13, true);
+        lista.addElemento(77, true);
+        lista.addElemento(51, true);
+
+        tree.addLista(lista);
 
         System.out.println("Altura do tree: " + tree.altura());
         tree.printPreOrder();
