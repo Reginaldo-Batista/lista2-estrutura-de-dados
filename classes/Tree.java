@@ -66,6 +66,25 @@ public class Tree {
 
     }
 
+    public int altura() {
+        return this.alturaRecursivo(this.raiz);
+    }
+
+    private int alturaRecursivo(Node node) {
+        if (node == null) {
+            return 0;
+        } else {
+            int tamanhoDireita = this.alturaRecursivo(node.direita);
+            int tamanhoEsquerda = this.alturaRecursivo(node.esquerda);
+
+            if (tamanhoDireita > tamanhoEsquerda) {
+                return (tamanhoDireita + 1);
+            } else {
+                return (tamanhoEsquerda + 1);
+            }
+        }
+    }
+
     public void printPreOrder() {
         this.printPreOrderRecursive(this.raiz);
     }

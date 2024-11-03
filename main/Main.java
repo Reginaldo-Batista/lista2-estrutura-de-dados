@@ -13,6 +13,7 @@ public class Main {
         tree.addNo(false, 7, tree.localizarNoIncompleto());
         tree.addNo(true, 8, tree.localizarNoIncompleto());
 
+        System.out.println("Altura do tree: " + tree.altura());
         tree.printPreOrder();
 
     }
