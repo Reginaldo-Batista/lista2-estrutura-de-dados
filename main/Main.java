@@ -11,7 +11,6 @@ public class Main {
 
         Lista lista = new Lista();
 
-        lista.addElemento(21, true);
         lista.addElemento(18, true);
         lista.addElemento(15, true);
         lista.addElemento(13, true);
@@ -21,7 +20,12 @@ public class Main {
         tree.addLista(lista);
 
         System.out.println("Altura do tree: " + tree.altura());
+        System.out.println("Quantidade de nós: " + tree.numNo());
         tree.printPreOrder();
+
+        Lista listaDaTree = tree.toList();
+
+        listaDaTree.printLista();
 
     }
 

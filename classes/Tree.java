@@ -99,8 +99,38 @@ public class Tree {
 
     }
 
+    public int numNo() {
+        return this.numNoRecursivo(this.raiz);
+    }
+
+    private int numNoRecursivo(Node node) {
+        if (node == null) {
+            return 0;
+        } else {
+            int quantidadeDireita = this.numNoRecursivo(node.direita);
+            int quantidadeEsquerda = this.numNoRecursivo(node.esquerda);
+            return quantidadeDireita + quantidadeEsquerda + 1;
+        }
+    }
+
+    public Lista toList() {
+        Lista lista = new Lista();
+        this.toListRecursivo(this.raiz, lista);
+        return lista.inverteLista();
+    }
+
+    private void toListRecursivo(Node node, Lista lista) {
+        if (node != null) {
+            lista.addElemento(node.valor, true);
+            this.toListRecursivo(node.esquerda, lista);
+            this.toListRecursivo(node.direita, lista);
+        }
+    }
+
     public void printPreOrder() {
+        System.out.printf("Impressão da árvore: ");
         this.printPreOrderRecursive(this.raiz);
+        System.out.println();
     }
 
     private void printPreOrderRecursive(Node node) {
