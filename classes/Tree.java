@@ -127,6 +127,25 @@ public class Tree {
         }
     }
 
+    public Lista toListLeefOnly() {
+        Lista listaDeFolhas = new Lista();
+
+        this.toListLeefOnlyRecursivo(this.raiz, listaDeFolhas);
+
+        return listaDeFolhas.inverteLista();
+    }
+
+    private void toListLeefOnlyRecursivo(Node node, Lista listaDeFolhas) {
+        if (node != null) {
+            if (node.direita == null && node.esquerda == null) {
+                listaDeFolhas.addElemento(node.valor, true);
+            } else {
+                this.toListLeefOnlyRecursivo(node.direita, listaDeFolhas);
+                this.toListLeefOnlyRecursivo(node.esquerda, listaDeFolhas);
+            }
+        }
+    }
+
     public void printPreOrder() {
         System.out.printf("Impressão da árvore: ");
         this.printPreOrderRecursive(this.raiz);
