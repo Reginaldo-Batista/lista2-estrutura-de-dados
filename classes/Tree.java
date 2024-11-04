@@ -177,6 +177,55 @@ public class Tree {
         }
     }
 
+    private Node localizaNodePaiRecursivo(Node noAtual, Node noAlvo) {
+
+        if (noAtual == null) {
+            return null;
+        }
+
+        else if (noAtual.direita.equals(noAlvo) || noAtual.esquerda.equals(noAlvo)) {
+            return noAtual;
+        }
+
+        else {
+            Node ladoDireito = this.localizaNodePaiRecursivo(noAtual.direita, noAlvo);
+            Node ladoEsquerdo = this.localizaNodePaiRecursivo(noAtual.esquerda, noAlvo);
+            return (ladoDireito != null) ? ladoDireito : ladoEsquerdo;
+        }
+    }
+
+    public void removeNo(Node noAlvo) {
+
+        // TODO falta o caso do noAlvo ser a raiz
+
+        Node paiDoAlvo = this.localizaNodePaiRecursivo(this.raiz, noAlvo);
+        Node filhoElegido;
+
+        // Decidindo qual filho do noAlvo tomará seu lugar, pode retornar null
+        if (noAlvo.direita != null && noAlvo.esquerda != null) {
+            filhoElegido = this.randomBoolean() ? noAlvo.direita : noAlvo.esquerda;
+        } else {
+            filhoElegido = (noAlvo.direita != null) ? noAlvo.direita : noAlvo.esquerda;
+        }
+
+        if (filhoElegido != null) {
+            // Verificando de qual lado o noAlvo está em relação ao seu pai
+            if (paiDoAlvo.direita.equals(noAlvo)) {
+                paiDoAlvo.direita = filhoElegido;
+            } else {
+                paiDoAlvo.esquerda = filhoElegido;
+            }
+            // Verificando de qual lado o filhoElegido está em relação ao noAlvo
+            // Depois adiciona o "filho_não_elegido" no mesmo sentido em que ele do noAlvo
+            if (noAlvo.direita.equals(filhoElegido)) {
+                this.localizaFolhaRecursivo(filhoElegido).esquerda = noAlvo.esquerda;
+            } else {
+                this.localizaFolhaRecursivo(filhoElegido).direita = noAlvo.direita;
+            }
+        }
+        noAlvo.direita = noAlvo.esquerda = null;
+    }
+
     public void printPreOrder() {
         System.out.printf("Impressão da árvore: ");
         this.printPreOrderRecursive(this.raiz);

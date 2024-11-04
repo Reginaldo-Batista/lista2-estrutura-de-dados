@@ -39,6 +39,9 @@ public class Main {
         listaDaTreeLeefOnly.printLista();
         System.out.println();
 
+        tree.removeNo(tree.localizarNoIncompleto());
+        tree.printPreOrder();
+
     }
 
 }
