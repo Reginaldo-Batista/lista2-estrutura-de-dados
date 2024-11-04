@@ -14,6 +14,14 @@ class Node {
         this.direita = null;
     }
 
+    public boolean temEsquerda() {
+        return (this.esquerda != null);
+    }
+
+    public boolean temDireita() {
+        return (this.direita != null);
+    }
+
 }
 
 public class Tree {
@@ -30,8 +38,15 @@ public class Tree {
         Node novoNode = new Node(valor);
 
         if (dir == true) {
+            while (refNo.direita != null) {
+                refNo = refNo.direita;
+            }
             refNo.direita = novoNode;
+
         } else {
+            while (refNo.esquerda != null) {
+                refNo = refNo.esquerda;
+            }
             refNo.esquerda = novoNode;
         }
 
@@ -44,10 +59,26 @@ public class Tree {
 
     // Questão 3
     public Node localizarNoIncompleto() {
-        return localizaFolhaRecursivo(this.raiz);
+        return localizaNoIncompletoRecursivo(this.raiz);
     }
 
     // Questão 3
+    private Node localizaNoIncompletoRecursivo(Node node) {
+
+        if (node.direita != null && node.esquerda != null) {
+            return this.localizaNoIncompletoRecursivo(this.randomBoolean()
+                    ? node.direita
+                    : node.esquerda);
+        } else {
+            return node;
+        }
+
+    }
+
+    public Node localizaFolha() {
+        return this.localizaFolhaRecursivo(this.raiz);
+    }
+
     private Node localizaFolhaRecursivo(Node node) {
 
         if (node.direita == null && node.esquerda == null) {

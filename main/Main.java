@@ -7,38 +7,37 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Lista lista = new Lista();
+        lista.addElemento(18, true);
+        lista.addElemento(15, true);
+        lista.addElemento(11, true);
+        lista.addElemento(17, true);
+        lista.addElemento(99, true);
+        lista.addElemento(20, true);
+        lista.addElemento(12, true);
+        lista.addElemento(14, true);
+        lista.addElemento(15, true);
+        lista.addElemento(30, true);
+        lista.addElemento(31, true);
+        lista.addElemento(1000, true);
+        
         Tree tree = new Tree(21);
-        // Testando, depois fazer o git restore main/Main.java
-        tree.addNo(tree.randomBoolean(), 12, tree.localizarNoIncompleto());
-        tree.addNo(tree.randomBoolean(), 11, tree.localizarNoIncompleto());
-        tree.addNo(tree.randomBoolean(), 10, tree.localizarNoIncompleto());
-        tree.addNo(tree.randomBoolean(), 9, tree.localizarNoIncompleto());
-        tree.addNo(tree.randomBoolean(), 1, tree.localizarNoIncompleto());
+        tree.addLista(lista);
 
+        System.out.println("Altura do árvore: " + tree.altura());
+        System.out.println("Quantidade de nós: " + tree.numNo());
         tree.printPreOrder();
+        System.out.println();
 
-        // Lista lista = new Lista();
+        System.out.printf("Lista a partir da árvore: ");
+        Lista listaDaTree = tree.toList();
+        listaDaTree.printLista();
+        System.out.println();
 
-        // lista.addElemento(18, true);
-        // lista.addElemento(15, true);
-        // lista.addElemento(19, true);
-
-        // tree.addLista(lista);
-
-        // System.out.println("Altura do tree: " + tree.altura());
-        // System.out.println("Quantidade de nós: " + tree.numNo());
-        // tree.printPreOrder();
-        // System.out.println();
-
-        // System.out.printf("Lista a partir da árvore: ");
-        // Lista listaDaTree = tree.toList();
-        // listaDaTree.printLista();
-        // System.out.println();
-
-        // System.out.printf("Lista a partir da árvore, só com folhas: ");
-        // Lista listaDaTreeLeefOnly = tree.toListLeefOnly();
-        // listaDaTreeLeefOnly.printLista();
-        // System.out.println();
+        System.out.printf("Lista apenas com folhas da árvore: ");
+        Lista listaDaTreeLeefOnly = tree.toListLeefOnly();
+        listaDaTreeLeefOnly.printLista();
+        System.out.println();
 
     }
 
