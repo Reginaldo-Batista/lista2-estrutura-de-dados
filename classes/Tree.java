@@ -22,6 +22,11 @@ class Node {
         return (this.direita != null);
     }
 
+    @Override
+    public String toString() {
+        return "" + this.valor;
+    }
+
 }
 
 public class Tree {
@@ -178,30 +183,47 @@ public class Tree {
     }
 
     private Node localizaNodePaiRecursivo(Node noAtual, Node noAlvo) {
-
         if (noAtual == null) {
             return null;
         }
 
-        else if (noAtual.direita.equals(noAlvo) || noAtual.esquerda.equals(noAlvo)) {
+        if ((noAtual.direita != null && noAtual.direita == noAlvo)
+                || (noAtual.esquerda != null && noAtual.esquerda == noAlvo)) {
             return noAtual;
         }
 
-        else {
-            Node ladoDireito = this.localizaNodePaiRecursivo(noAtual.direita, noAlvo);
-            Node ladoEsquerdo = this.localizaNodePaiRecursivo(noAtual.esquerda, noAlvo);
-            return (ladoDireito != null) ? ladoDireito : ladoEsquerdo;
+        Node ladoDireito = this.localizaNodePaiRecursivo(noAtual.direita, noAlvo);
+        if (ladoDireito != null) {
+            return ladoDireito;
         }
+        return this.localizaNodePaiRecursivo(noAtual.esquerda, noAlvo);
     }
 
     public void removeNo(Node noAlvo) {
-
-        // TODO falta o caso do noAlvo ser a raiz
+        if (this.raiz == noAlvo) {
+            if (noAlvo.direita != null || noAlvo.esquerda != null) {
+                this.raiz = (noAlvo.direita != null) ? noAlvo.direita : noAlvo.esquerda;
+                Node folha = this.localizaFolhaRecursivo(this.raiz);
+                if (this.raiz == noAlvo.direita) {
+                    folha.esquerda = noAlvo.esquerda; // Mover o filho não escolhido
+                } else {
+                    folha.direita = noAlvo.direita; // Mover o filho não escolhido
+                }
+            } else {
+                this.raiz = null;
+            }
+            noAlvo.direita = noAlvo.esquerda = null;
+            return;
+        }
 
         Node paiDoAlvo = this.localizaNodePaiRecursivo(this.raiz, noAlvo);
+        if (paiDoAlvo == null) {
+            return;
+        }
+
         Node filhoElegido;
 
-        // Decidindo qual filho do noAlvo tomará seu lugar, pode retornar null
+        // Decide qual filho do nó alvo tomará seu lugar, pode retornar null
         if (noAlvo.direita != null && noAlvo.esquerda != null) {
             filhoElegido = this.randomBoolean() ? noAlvo.direita : noAlvo.esquerda;
         } else {
@@ -209,21 +231,22 @@ public class Tree {
         }
 
         if (filhoElegido != null) {
-            // Verificando de qual lado o noAlvo está em relação ao seu pai
-            if (paiDoAlvo.direita.equals(noAlvo)) {
+            // Verifica de qual lado o nó alvo está em relação ao seu pai
+            if (paiDoAlvo.direita == noAlvo) {
                 paiDoAlvo.direita = filhoElegido;
             } else {
                 paiDoAlvo.esquerda = filhoElegido;
             }
-            // Verificando de qual lado o filhoElegido está em relação ao noAlvo
-            // Depois adiciona o "filho_não_elegido" no mesmo sentido em que ele do noAlvo
-            if (noAlvo.direita.equals(filhoElegido)) {
-                this.localizaFolhaRecursivo(filhoElegido).esquerda = noAlvo.esquerda;
+
+            // Verifica de qual lado o filhoElegido está em relação ao nó alvo
+            Node folhaFilhoElegido = this.localizaFolhaRecursivo(filhoElegido);
+            if (noAlvo.direita == filhoElegido) {
+                folhaFilhoElegido.esquerda = noAlvo.esquerda; // Mover o filho não escolhido
             } else {
-                this.localizaFolhaRecursivo(filhoElegido).direita = noAlvo.direita;
+                folhaFilhoElegido.direita = noAlvo.direita; // Mover o filho não escolhido
             }
         }
-        noAlvo.direita = noAlvo.esquerda = null;
+        noAlvo.direita = noAlvo.esquerda = null; // Limpa as referências
     }
 
     public void printPreOrder() {

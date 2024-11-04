@@ -40,7 +40,10 @@ public class Main {
         System.out.println();
 
         tree.removeNo(tree.localizarNoIncompleto());
+        System.out.println("Altura do árvore: " + tree.altura());
+        System.out.println("Quantidade de nós: " + tree.numNo());
         tree.printPreOrder();
+        System.out.println();
 
     }
 
