@@ -40,6 +40,10 @@ public class Tree {
     // Questão 2
     public void addNo(Boolean dir, int valor, Node refNo) {
 
+	if(refNo == null){
+		return;
+	}
+
         Node novoNode = new Node(valor);
 
         if (dir == true) {
@@ -70,6 +74,10 @@ public class Tree {
     // Questão 3
     private Node localizaNoIncompletoRecursivo(Node node) {
 
+	if (node == null){
+		return null;			
+	}
+
         if (node.direita != null && node.esquerda != null) {
             return this.localizaNoIncompletoRecursivo(this.randomBoolean()
                     ? node.direita
@@ -85,6 +93,10 @@ public class Tree {
     }
 
     private Node localizaFolhaRecursivo(Node node) {
+	
+	if (node == null){
+		return null;
+	}
 
         if (node.direita == null && node.esquerda == null) {
             return node;
@@ -199,14 +211,19 @@ public class Tree {
     }
 
     public void removeNo(Node noAlvo) {
+	
+	if (noAlvo == null){
+		return;
+	}
+
         if (this.raiz == noAlvo) {
             if (noAlvo.direita != null || noAlvo.esquerda != null) {
                 this.raiz = (noAlvo.direita != null) ? noAlvo.direita : noAlvo.esquerda;
                 Node folha = this.localizaFolhaRecursivo(this.raiz);
                 if (this.raiz == noAlvo.direita) {
-                    folha.esquerda = noAlvo.esquerda; // Mover o filho não escolhido
+                    folha.esquerda = noAlvo.esquerda; 
                 } else {
-                    folha.direita = noAlvo.direita; // Mover o filho não escolhido
+                    folha.direita = noAlvo.direita; 
                 }
             } else {
                 this.raiz = null;
