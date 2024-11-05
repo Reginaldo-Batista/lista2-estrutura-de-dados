@@ -182,21 +182,20 @@ public class Tree {
         }
     }
 
-    private Node localizaNodePaiRecursivo(Node noAtual, Node noAlvo) {
-        if (noAtual == null) {
+    private Node localizaNodePaiRecursivo(Node noPai, Node noAlvo) {
+        if (noPai == null) {
             return null;
         }
 
-        if ((noAtual.direita != null && noAtual.direita == noAlvo)
-                || (noAtual.esquerda != null && noAtual.esquerda == noAlvo)) {
-            return noAtual;
+        if (noPai.direita == noAlvo || noPai.esquerda == noAlvo) {
+            return noPai;
         }
 
-        Node ladoDireito = this.localizaNodePaiRecursivo(noAtual.direita, noAlvo);
+        Node ladoDireito = this.localizaNodePaiRecursivo(noPai.direita, noAlvo);
         if (ladoDireito != null) {
             return ladoDireito;
         }
-        return this.localizaNodePaiRecursivo(noAtual.esquerda, noAlvo);
+        return this.localizaNodePaiRecursivo(noPai.esquerda, noAlvo);
     }
 
     public void removeNo(Node noAlvo) {
