@@ -11,11 +11,11 @@ public class Lista {
     
     Bloco inicio;
 
-    public Bloco addElemento(int valor, boolean posicaoIncio) {
+    public Bloco addElemento(int valor, boolean posicaoInicio) {
 
         Bloco novo = null;
 
-        if (posicaoIncio == true) {
+        if (posicaoInicio == true) {
             novo = this.addElementoInicio(valor);
         } else {
             novo = this.addElementoFim(valor);

@@ -4,9 +4,33 @@ import java.util.Random;
 
 class Node {
 
-    int valor;
-    Node esquerda;
-    Node direita;
+    private int valor;
+    private Node esquerda;
+    private Node direita;
+
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
+    public Node getEsquerda() {
+        return esquerda;
+    }
+
+    public void setEsquerda(Node esquerda) {
+        this.esquerda = esquerda;
+    }
+
+    public Node getDireita() {
+        return direita;
+    }
+
+    public void setDireita(Node direita) {
+        this.direita = direita;
+    }
 
     public Node(int valor) {
         this.valor = valor;
@@ -14,12 +38,16 @@ class Node {
         this.direita = null;
     }
 
-    public boolean temEsquerda() {
+    public boolean hasLeft() {
         return (this.esquerda != null);
     }
 
-    public boolean temDireita() {
+    public boolean hasRight() {
         return (this.direita != null);
+    }
+
+    public boolean isLeaf() {
+        return (this.esquerda == null && this.direita == null);
     }
 
     @Override
@@ -40,29 +68,29 @@ public class Tree {
     // Questão 2
     public void addNo(Boolean dir, int valor, Node refNo) {
 
-	if(refNo == null){
-		return;
-	}
+        if (refNo == null) {
+            return;
+        }
 
         Node novoNode = new Node(valor);
 
         if (dir == true) {
-            while (refNo.direita != null) {
-                refNo = refNo.direita;
+            while (refNo.hasRight()) {
+                refNo = refNo.getDireita();
             }
-            refNo.direita = novoNode;
+            refNo.setDireita(novoNode);
 
         } else {
-            while (refNo.esquerda != null) {
-                refNo = refNo.esquerda;
+            while (refNo.hasLeft()) {
+                refNo = refNo.getEsquerda();
             }
-            refNo.esquerda = novoNode;
+            refNo.setEsquerda(novoNode);
         }
 
     }
 
     // Questão 3
-    public Boolean randomBoolean() {
+    public Boolean getRandomBoolean() {
         return (new Random().nextBoolean());
     }
 
@@ -74,14 +102,14 @@ public class Tree {
     // Questão 3
     private Node localizaNoIncompletoRecursivo(Node node) {
 
-	if (node == null){
-		return null;			
-	}
+        if (node == null) {
+            return null;
+        }
 
-        if (node.direita != null && node.esquerda != null) {
-            return this.localizaNoIncompletoRecursivo(this.randomBoolean()
-                    ? node.direita
-                    : node.esquerda);
+        if (node.hasLeft() && node.hasRight()) {
+            return this.localizaNoIncompletoRecursivo(this.getRandomBoolean()
+                    ? node.getDireita()
+                    : node.getEsquerda());
         } else {
             return node;
         }
@@ -93,25 +121,21 @@ public class Tree {
     }
 
     private Node localizaFolhaRecursivo(Node node) {
-	
-	if (node == null){
-		return null;
-	}
+        if (node == null) {
+            return null;
+        }
 
-        if (node.direita == null && node.esquerda == null) {
+        if (node.isLeaf()) {
             return node;
         }
 
-        else if (node.direita != null && node.esquerda != null) {
-            return this.randomBoolean() ? this.localizaFolhaRecursivo(node.direita)
-                    : this.localizaFolhaRecursivo(node.esquerda);
+        if (node.hasLeft() && node.hasRight()) {
+            return this.getRandomBoolean() ? this.localizaFolhaRecursivo(node.getDireita())
+                    : this.localizaFolhaRecursivo(node.getEsquerda());
         }
 
-        else {
-            return (node.direita != null) ? this.localizaFolhaRecursivo(node.direita)
-                    : this.localizaFolhaRecursivo(node.esquerda);
-        }
-
+        return node.hasRight() ? this.localizaFolhaRecursivo(node.getDireita())
+                : this.localizaFolhaRecursivo(node.getEsquerda());
     }
 
     public int altura() {
@@ -121,30 +145,24 @@ public class Tree {
     private int alturaRecursivo(Node node) {
         if (node == null) {
             return 0;
-        } else {
-            int tamanhoDireita = this.alturaRecursivo(node.direita);
-            int tamanhoEsquerda = this.alturaRecursivo(node.esquerda);
-
-            if (tamanhoDireita > tamanhoEsquerda) {
-                return (tamanhoDireita + 1);
-            } else {
-                return (tamanhoEsquerda + 1);
-            }
         }
+        int alturaDireita = this.alturaRecursivo(node.getDireita());
+        int alturaEsquerda = this.alturaRecursivo(node.getEsquerda());
+
+        // Se for igual sempre retornará a altura direita
+        return Math.max(alturaDireita, alturaEsquerda) + 1;
     }
 
     public void addLista(Lista lista) {
-
         Bloco aux = lista.inicio;
 
         while (aux != null) {
             this.addNo(
-                    this.randomBoolean(),
+                    this.getRandomBoolean(),
                     aux.valor,
                     this.localizarNoIncompleto());
             aux = aux.prox;
         }
-
     }
 
     public int numNo() {
@@ -155,8 +173,8 @@ public class Tree {
         if (node == null) {
             return 0;
         } else {
-            int quantidadeDireita = this.numNoRecursivo(node.direita);
-            int quantidadeEsquerda = this.numNoRecursivo(node.esquerda);
+            int quantidadeDireita = this.numNoRecursivo(node.getDireita());
+            int quantidadeEsquerda = this.numNoRecursivo(node.getEsquerda());
             return quantidadeDireita + quantidadeEsquerda + 1;
         }
     }
@@ -169,9 +187,9 @@ public class Tree {
 
     private void toListRecursivo(Node node, Lista lista) {
         if (node != null) {
-            lista.addElemento(node.valor, true);
-            this.toListRecursivo(node.esquerda, lista);
-            this.toListRecursivo(node.direita, lista);
+            lista.addElemento(node.getValor(), true);
+            this.toListRecursivo(node.getEsquerda(), lista);
+            this.toListRecursivo(node.getDireita(), lista);
         }
     }
 
@@ -185,11 +203,11 @@ public class Tree {
 
     private void toListLeefOnlyRecursivo(Node node, Lista listaDeFolhas) {
         if (node != null) {
-            if (node.direita == null && node.esquerda == null) {
-                listaDeFolhas.addElemento(node.valor, true);
+            if (node.isLeaf()) {
+                listaDeFolhas.addElemento(node.getValor(), true);
             } else {
-                this.toListLeefOnlyRecursivo(node.direita, listaDeFolhas);
-                this.toListLeefOnlyRecursivo(node.esquerda, listaDeFolhas);
+                this.toListLeefOnlyRecursivo(node.getDireita(), listaDeFolhas);
+                this.toListLeefOnlyRecursivo(node.getEsquerda(), listaDeFolhas);
             }
         }
     }
@@ -199,36 +217,24 @@ public class Tree {
             return null;
         }
 
-        if (noPai.direita == noAlvo || noPai.esquerda == noAlvo) {
+        if (noPai.getDireita() == noAlvo || noPai.getEsquerda() == noAlvo) {
             return noPai;
         }
 
-        Node ladoDireito = this.localizaNodePaiRecursivo(noPai.direita, noAlvo);
+        Node ladoDireito = this.localizaNodePaiRecursivo(noPai.getDireita(), noAlvo);
         if (ladoDireito != null) {
             return ladoDireito;
         }
-        return this.localizaNodePaiRecursivo(noPai.esquerda, noAlvo);
+        return this.localizaNodePaiRecursivo(noPai.getEsquerda(), noAlvo);
     }
 
     public void removeNo(Node noAlvo) {
-	
-	if (noAlvo == null){
-		return;
-	}
+        if (noAlvo == null) {
+            return;
+        }
 
         if (this.raiz == noAlvo) {
-            if (noAlvo.direita != null || noAlvo.esquerda != null) {
-                this.raiz = (noAlvo.direita != null) ? noAlvo.direita : noAlvo.esquerda;
-                Node folha = this.localizaFolhaRecursivo(this.raiz);
-                if (this.raiz == noAlvo.direita) {
-                    folha.esquerda = noAlvo.esquerda; 
-                } else {
-                    folha.direita = noAlvo.direita; 
-                }
-            } else {
-                this.raiz = null;
-            }
-            noAlvo.direita = noAlvo.esquerda = null;
+            handleRootRemoval(noAlvo);
             return;
         }
 
@@ -237,32 +243,61 @@ public class Tree {
             return;
         }
 
-        Node filhoElegido;
-
-        // Decide qual filho do nó alvo tomará seu lugar, pode retornar null
-        if (noAlvo.direita != null && noAlvo.esquerda != null) {
-            filhoElegido = this.randomBoolean() ? noAlvo.direita : noAlvo.esquerda;
-        } else {
-            filhoElegido = (noAlvo.direita != null) ? noAlvo.direita : noAlvo.esquerda;
-        }
+        Node filhoElegido = chooseReplacementChild(noAlvo);
 
         if (filhoElegido != null) {
-            // Verifica de qual lado o nó alvo está em relação ao seu pai
-            if (paiDoAlvo.direita == noAlvo) {
-                paiDoAlvo.direita = filhoElegido;
-            } else {
-                paiDoAlvo.esquerda = filhoElegido;
-            }
-
-            // Verifica de qual lado o filhoElegido está em relação ao nó alvo
-            Node folhaFilhoElegido = this.localizaFolhaRecursivo(filhoElegido);
-            if (noAlvo.direita == filhoElegido) {
-                folhaFilhoElegido.esquerda = noAlvo.esquerda; // Mover o filho não escolhido
-            } else {
-                folhaFilhoElegido.direita = noAlvo.direita; // Mover o filho não escolhido
-            }
+            replaceChild(paiDoAlvo, noAlvo, filhoElegido);
+            moveUnchosenChild(noAlvo, filhoElegido);
         }
-        noAlvo.direita = noAlvo.esquerda = null; // Limpa as referências
+
+        clearNodeReferences(noAlvo);
+    }
+
+    private void handleRootRemoval(Node noAlvo) {
+        Node filhoElegido = chooseReplacementChild(noAlvo);
+
+        if (filhoElegido != null) {
+            this.raiz = filhoElegido;
+            Node folha = this.localizaFolhaRecursivo(filhoElegido);
+            if (filhoElegido == noAlvo.getDireita()) {
+                folha.setEsquerda(noAlvo.getEsquerda());
+            } else {
+                folha.setDireita(noAlvo.getDireita());
+            }
+        } else {
+            this.raiz = null;
+        }
+        clearNodeReferences(noAlvo);
+    }
+
+    private Node chooseReplacementChild(Node noAlvo) {
+        if (noAlvo.hasRight() && noAlvo.hasLeft()) {
+            return this.getRandomBoolean() ? noAlvo.getDireita() : noAlvo.getEsquerda();
+        } else {
+            return (noAlvo.hasRight()) ? noAlvo.getDireita() : noAlvo.getEsquerda();
+        }
+    }
+
+    private void replaceChild(Node paiDoAlvo, Node noAlvo, Node filhoElegido) {
+        if (paiDoAlvo.getDireita() == noAlvo) {
+            paiDoAlvo.setDireita(filhoElegido);
+        } else {
+            paiDoAlvo.setEsquerda(filhoElegido);
+        }
+    }
+
+    private void moveUnchosenChild(Node noAlvo, Node filhoElegido) {
+        Node folhaFilhoElegido = this.localizaFolhaRecursivo(filhoElegido);
+        if (noAlvo.getDireita() == filhoElegido) {
+            folhaFilhoElegido.setEsquerda(noAlvo.getEsquerda());
+        } else {
+            folhaFilhoElegido.setDireita(noAlvo.getDireita());
+        }
+    }
+
+    private void clearNodeReferences(Node noAlvo) {
+        noAlvo.setDireita(null);
+        noAlvo.setEsquerda(null);
     }
 
     public void printPreOrder() {
@@ -273,9 +308,9 @@ public class Tree {
 
     private void printPreOrderRecursive(Node node) {
         if (node != null) {
-            System.out.printf(node.valor + " ");
-            this.printPreOrderRecursive(node.esquerda);
-            this.printPreOrderRecursive(node.direita);
+            System.out.printf(node.getValor() + " ");
+            this.printPreOrderRecursive(node.getEsquerda());
+            this.printPreOrderRecursive(node.getDireita());
         }
     }
 
