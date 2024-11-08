@@ -6,6 +6,12 @@ public class Node {
     private Node esquerda;
     private Node direita;
 
+    public Node(int valor) {
+        this.valor = valor;
+        this.esquerda = null;
+        this.direita = null;
+    }
+
     public int getValor() {
         return valor;
     }
@@ -28,12 +34,6 @@ public class Node {
 
     public void setDireita(Node direita) {
         this.direita = direita;
-    }
-
-    public Node(int valor) {
-        this.valor = valor;
-        this.esquerda = null;
-        this.direita = null;
     }
 
     public boolean hasLeft() {

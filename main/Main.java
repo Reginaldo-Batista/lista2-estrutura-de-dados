@@ -2,7 +2,7 @@ package main;
 import classes.Lista;
 import classes.Tree;
 
-@SuppressWarnings("unused")
+// @SuppressWarnings("unused")
 public class Main {
 
     public static void main(String[] args) {
