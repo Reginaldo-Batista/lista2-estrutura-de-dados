@@ -1,14 +1,7 @@
 package classes;
 
-class Bloco {
-
-    int valor;
-    Bloco prox;
-
-}
-
 public class Lista {
-    
+
     Bloco inicio;
 
     public Bloco addElemento(int valor, boolean posicaoInicio) {
@@ -37,9 +30,9 @@ public class Lista {
         }
 
         Bloco novo = new Bloco();
-        novo.valor = valor;
-        novo.prox = blocoAnterior.prox;
-        blocoAnterior.prox = novo;
+        novo.setValor(valor);
+        novo.setProx(blocoAnterior.getProx());
+        blocoAnterior.setProx(novo);
         return novo;
 
     }
@@ -60,8 +53,8 @@ public class Lista {
 
             Bloco target = this.localizarBloco(this.tamanho() - 1);
 
-            result = target.prox;
-            target.prox = null;
+            result = target.getProx();
+            target.setProx(null);
         }
 
         return result;
@@ -72,7 +65,7 @@ public class Lista {
         Bloco result = this.inicio;
         if (!this.isVazia()) {
 
-            this.inicio = this.inicio.prox;
+            this.inicio = this.inicio.getProx();
         }
 
         return result;
@@ -86,9 +79,9 @@ public class Lista {
     private Bloco addElementoInicio(int valor) {
 
         Bloco novo = new Bloco();
-        novo.valor = valor;
+        novo.setValor(valor);
 
-        novo.prox = this.inicio;
+        novo.setProx(this.inicio);
         this.inicio = novo;
 
         return novo;
@@ -106,9 +99,9 @@ public class Lista {
         } else {
 
             novo = new Bloco();
-            novo.valor = valor;
+            novo.setValor(valor);
 
-            fim.prox = novo;
+            fim.setProx(novo);
         }
 
         return novo;
@@ -121,7 +114,7 @@ public class Lista {
 
         while (aux != null && cont < pos - 1) {
             cont++;
-            aux = aux.prox;
+            aux = aux.getProx();
         }
         return aux;
     }
@@ -134,7 +127,7 @@ public class Lista {
         while (aux != null) {
 
             cont++;
-            aux = aux.prox;
+            aux = aux.getProx();
 
         }
 
@@ -152,8 +145,8 @@ public class Lista {
 
         System.out.printf("Existem %d bloco(s):\n", this.tamanho());
         while (aux != null) {
-            System.out.printf(aux.valor + " -> ");
-            aux = aux.prox;
+            System.out.printf(aux.getValor() + " -> ");
+            aux = aux.getProx();
         }
         System.out.println("null");
     }
@@ -162,8 +155,8 @@ public class Lista {
         Bloco aux = this.inicio;
         Lista listaInvert = new Lista();
         while (aux != null) {
-            listaInvert.addElemento(aux.valor, true);
-            aux = aux.prox;
+            listaInvert.addElemento(aux.getValor(), true);
+            aux = aux.getProx();
         }
         return listaInvert;
     }
@@ -177,26 +170,26 @@ public class Lista {
         while (referencia != null) {
 
             anteriorAnalisado = referencia;
-            analisado = referencia.prox;
+            analisado = referencia.getProx();
 
             while (analisado != null) {
 
-                if (referencia.valor == analisado.valor) {
+                if (referencia.getValor() == analisado.getValor()) {
 
-                    anteriorAnalisado.prox = analisado.prox;
-                    analisado.prox = null; // Opcional
-                    analisado = anteriorAnalisado.prox;
+                    anteriorAnalisado.setProx(analisado.getProx());
+                    analisado.setProx(null); // Opcional
+                    analisado = anteriorAnalisado.getProx();
 
                 } else {
 
-                    analisado = analisado.prox;
-                    anteriorAnalisado = anteriorAnalisado.prox;
+                    analisado = analisado.getProx();
+                    anteriorAnalisado = anteriorAnalisado.getProx();
 
                 }
 
             }
 
-            referencia = referencia.prox;
+            referencia = referencia.getProx();
 
         }
 

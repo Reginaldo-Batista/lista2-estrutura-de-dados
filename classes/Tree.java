@@ -104,9 +104,9 @@ public class Tree {
         while (aux != null) {
             this.addNo(
                     this.getRandomBoolean(),
-                    aux.valor,
+                    aux.getValor(),
                     this.localizarNoIncompleto());
-            aux = aux.prox;
+            aux = aux.getProx();
         }
     }
 
