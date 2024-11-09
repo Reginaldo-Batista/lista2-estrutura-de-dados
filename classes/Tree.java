@@ -1,13 +1,26 @@
 package classes;
 
-import java.util.Random;
-
 public class Tree {
 
     Node raiz;
 
     public Tree(int valor) {
         this.raiz = new Node(valor);
+    }
+
+    public static Tree getTree(int rootValue, int finalSizeOfTree) {
+        if (finalSizeOfTree <= 0) {
+            return null;
+        }
+
+        Tree newTree = new Tree(rootValue);
+        for (int i = 0; i < finalSizeOfTree - 1; i++) {
+            newTree.addNo(
+                    Randomize.getRandomBoolean(),
+                    Randomize.getRandomInt(1, 100),
+                    newTree.localizarNoIncompleto());
+        }
+        return newTree;
     }
 
     // Questão 2
@@ -19,7 +32,7 @@ public class Tree {
 
         Node novoNode = new Node(valor);
 
-        if (dir == true) {
+        if (dir) {
             while (refNo.hasRight()) {
                 refNo = refNo.getDireita();
             }
@@ -35,11 +48,6 @@ public class Tree {
     }
 
     // Questão 3
-    public Boolean getRandomBoolean() {
-        return (new Random().nextBoolean());
-    }
-
-    // Questão 3
     public Node localizarNoIncompleto() {
         return localizaNoIncompletoRecursivo(this.raiz);
     }
@@ -52,7 +60,7 @@ public class Tree {
         }
 
         if (node.hasLeft() && node.hasRight()) {
-            return this.localizaNoIncompletoRecursivo(this.getRandomBoolean()
+            return this.localizaNoIncompletoRecursivo(Randomize.getRandomBoolean()
                     ? node.getDireita()
                     : node.getEsquerda());
         } else {
@@ -75,11 +83,13 @@ public class Tree {
         }
 
         if (node.hasLeft() && node.hasRight()) {
-            return this.getRandomBoolean() ? this.localizaFolhaRecursivo(node.getDireita())
+            return Randomize.getRandomBoolean()
+                    ? this.localizaFolhaRecursivo(node.getDireita())
                     : this.localizaFolhaRecursivo(node.getEsquerda());
         }
 
-        return node.hasRight() ? this.localizaFolhaRecursivo(node.getDireita())
+        return node.hasRight()
+                ? this.localizaFolhaRecursivo(node.getDireita())
                 : this.localizaFolhaRecursivo(node.getEsquerda());
     }
 
@@ -103,7 +113,7 @@ public class Tree {
 
         while (aux != null) {
             this.addNo(
-                    this.getRandomBoolean(),
+                    Randomize.getRandomBoolean(),
                     aux.getValor(),
                     this.localizarNoIncompleto());
             aux = aux.getProx();
@@ -198,20 +208,6 @@ public class Tree {
         clearNodeReferences(noAlvo);
     }
 
-    /**
-     * Handles the removal of the root node in the tree.
-     * 
-     * This method is responsible for removing the root node (noAlvo) from the tree.
-     * It chooses a replacement child node (filhoElegido) to take the place of the
-     * root.
-     * If a replacement child is found, it sets this child as the new root and
-     * adjusts
-     * the tree structure accordingly. If no replacement child is found, it sets the
-     * root
-     * to null, effectively making the tree empty.
-     * 
-     * @param raiz The root to be removed
-     */
     private void handleRootRemoval(Node raiz) {
         Node filhoElegido = chooseReplacementChild(raiz);
 
@@ -229,30 +225,18 @@ public class Tree {
         clearNodeReferences(raiz);
     }
 
-    /**
-     * Chooses a replacement child node for the given target node.
-     * If the target node has both left and right children, a random child is chosen.
-     * If the target node has only one child, that child is chosen.
-     * If the target node has no children, null is returned.
-     *
-     * @param noPai the target node for which a replacement child is to be chosen
-     * @return the chosen replacement child node, or null if the target node has no children
-     */
     private Node chooseReplacementChild(Node noPai) {
         if (noPai.hasRight() && noPai.hasLeft()) {
-            return this.getRandomBoolean() ? noPai.getDireita() : noPai.getEsquerda();
+            return Randomize.getRandomBoolean()
+                    ? noPai.getDireita()
+                    : noPai.getEsquerda();
         } else {
-            return (noPai.hasRight()) ? noPai.getDireita() : noPai.getEsquerda();
+            return (noPai.hasRight())
+                    ? noPai.getDireita()
+                    : noPai.getEsquerda();
         }
     }
 
-    /**
-     * Replaces the child node of a given parent node with a new child node.
-     *
-     * @param paiAlvo The parent node whose child is to be replaced.
-     * @param alvo The current child node that is to be replaced.
-     * @param filhoElegido The new child node that will replace the current child node.
-     */
     private void replaceChild(Node paiAlvo, Node alvo, Node filhoElegido) {
         if (paiAlvo.getDireita() == alvo) {
             paiAlvo.setDireita(filhoElegido);
@@ -261,12 +245,6 @@ public class Tree {
         }
     }
 
-    /**
-     * Moves the unchosen child of the target node to the leaf of the chosen child.
-     *
-     * @param alvo The target node whose unchosen child will be moved.
-     * @param filhoElegido The chosen child node whose leaf will receive the unchosen child.
-     */
     private void moveUnchosenChild(Node alvo, Node filhoElegido) {
         Node folhaFilhoElegido = this.localizaFolhaRecursivo(filhoElegido);
         if (alvo.getDireita() == filhoElegido) {
