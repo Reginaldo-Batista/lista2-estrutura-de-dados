@@ -2,6 +2,9 @@ package classes;
 
 import java.util.Random;
 
+/**
+ * A classe Randomize fornece métodos utilitários para aleatorizar.
+ */
 public class Randomize {
 
     public static Random random = new Random();

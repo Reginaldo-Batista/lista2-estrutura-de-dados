@@ -1,5 +1,6 @@
 package classes;
 
+// Questão 1
 public class Tree {
 
     Node raiz;
@@ -8,6 +9,7 @@ public class Tree {
         this.raiz = new Node(valor);
     }
 
+    // Apenas para facilitar a construção de árvores aleatórias
     public static Tree getTree(int rootValue, int finalSizeOfTree) {
         if (finalSizeOfTree <= 0) {
             return null;
@@ -93,10 +95,12 @@ public class Tree {
                 : this.localizaFolhaRecursivo(node.getEsquerda());
     }
 
+    // Questão 4
     public int altura() {
         return this.alturaRecursivo(this.raiz);
     }
 
+    // Questão 4
     private int alturaRecursivo(Node node) {
         if (node == null) {
             return 0;
@@ -108,6 +112,7 @@ public class Tree {
         return Math.max(alturaDireita, alturaEsquerda) + 1;
     }
 
+    // Questão 5
     public void addLista(Lista lista) {
         Bloco aux = lista.inicio;
 
@@ -120,10 +125,12 @@ public class Tree {
         }
     }
 
+    // Questão 6
     public int numNo() {
         return this.numNoRecursivo(this.raiz);
     }
 
+    // Questão 6
     private int numNoRecursivo(Node node) {
         if (node == null) {
             return 0;
@@ -134,12 +141,14 @@ public class Tree {
         }
     }
 
+    // Questão 7
     public Lista toList() {
         Lista lista = new Lista();
         this.toListRecursivo(this.raiz, lista);
         return lista.inverteLista();
     }
 
+    // Questão 7
     private void toListRecursivo(Node node, Lista lista) {
         if (node != null) {
             lista.addElemento(node.getValor(), true);
@@ -148,6 +157,7 @@ public class Tree {
         }
     }
 
+    // Questão 8
     public Lista toListLeefOnly() {
         Lista listaDeFolhas = new Lista();
 
@@ -156,6 +166,7 @@ public class Tree {
         return listaDeFolhas.inverteLista();
     }
 
+    // Questão 8
     private void toListLeefOnlyRecursivo(Node node, Lista listaDeFolhas) {
         if (node != null) {
             if (node.isLeaf()) {
@@ -167,22 +178,7 @@ public class Tree {
         }
     }
 
-    private Node localizaNodePaiRecursivo(Node noPai, Node noAlvo) {
-        if (noPai == null) {
-            return null;
-        }
-
-        if (noPai.getDireita() == noAlvo || noPai.getEsquerda() == noAlvo) {
-            return noPai;
-        }
-
-        Node ladoDireito = this.localizaNodePaiRecursivo(noPai.getDireita(), noAlvo);
-        if (ladoDireito != null) {
-            return ladoDireito;
-        }
-        return this.localizaNodePaiRecursivo(noPai.getEsquerda(), noAlvo);
-    }
-
+    // Questão 9
     public void removeNo(Node noAlvo) {
         if (noAlvo == null) {
             return;
@@ -208,6 +204,24 @@ public class Tree {
         clearNodeReferences(noAlvo);
     }
 
+    // Questão 9
+    private Node localizaNodePaiRecursivo(Node noPai, Node noAlvo) {
+        if (noPai == null) {
+            return null;
+        }
+
+        if (noPai.getDireita() == noAlvo || noPai.getEsquerda() == noAlvo) {
+            return noPai;
+        }
+
+        Node ladoDireito = this.localizaNodePaiRecursivo(noPai.getDireita(), noAlvo);
+        if (ladoDireito != null) {
+            return ladoDireito;
+        }
+        return this.localizaNodePaiRecursivo(noPai.getEsquerda(), noAlvo);
+    }
+
+    // Questão 9
     private void handleRootRemoval(Node raiz) {
         Node filhoElegido = chooseReplacementChild(raiz);
 
@@ -225,6 +239,7 @@ public class Tree {
         clearNodeReferences(raiz);
     }
 
+    // Questão 9
     private Node chooseReplacementChild(Node noPai) {
         if (noPai.hasRight() && noPai.hasLeft()) {
             return Randomize.getRandomBoolean()
@@ -237,6 +252,7 @@ public class Tree {
         }
     }
 
+    // Questão 9
     private void replaceChild(Node paiAlvo, Node alvo, Node filhoElegido) {
         if (paiAlvo.getDireita() == alvo) {
             paiAlvo.setDireita(filhoElegido);
@@ -245,6 +261,7 @@ public class Tree {
         }
     }
 
+    // Questão 9
     private void moveUnchosenChild(Node alvo, Node filhoElegido) {
         Node folhaFilhoElegido = this.localizaFolhaRecursivo(filhoElegido);
         if (alvo.getDireita() == filhoElegido) {
@@ -254,6 +271,7 @@ public class Tree {
         }
     }
 
+    // Questão 9
     private void clearNodeReferences(Node noAlvo) {
         noAlvo.setDireita(null);
         noAlvo.setEsquerda(null);
