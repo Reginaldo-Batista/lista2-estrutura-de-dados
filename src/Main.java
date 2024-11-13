@@ -1,6 +1,7 @@
-package main;
-import classes.Lista;
-import classes.Tree;
+package src;
+
+import src.classes.Lista;
+import src.classes.Tree;
 
 // @SuppressWarnings("unused")
 public class Main {

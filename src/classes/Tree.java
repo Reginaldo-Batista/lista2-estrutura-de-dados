@@ -1,4 +1,4 @@
-package classes;
+package src.classes;
 
 // Questão 1
 public class Tree {

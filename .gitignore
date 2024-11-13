@@ -1,0 +1,11 @@
+# Ignore all .class files
+*.class
+
+# Ignore other Java related files
+*.jar
+*.war
+*.ear
+*.log
+*.iml
+*.ipr
+*.iws
