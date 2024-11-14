@@ -269,6 +269,25 @@ public class Tree {
         }
     }
 
+    // Questão 10
+    public void concatenateTree(Node targetNode, Tree treeToConcat) {
+
+        if (targetNode == null
+                || treeToConcat == null
+                || treeToConcat.raiz == null) {
+            return;
+        }
+
+        Node noIncompleto = this.localizaNoIncompletoRecursivo(targetNode);
+        
+        if (!noIncompleto.hasRight()) {
+            noIncompleto.setDireita(treeToConcat.raiz);
+        } else {
+            noIncompleto.setEsquerda(treeToConcat.raiz);
+        }
+
+    }
+
     public void printPreOrder() {
         System.out.printf("Impressão da árvore: ");
         this.printPreOrderRecursive(this.raiz);
