@@ -270,7 +270,7 @@ public class Tree {
     }
 
     // Questão 10
-    public void concatenateTree(Node targetNode, Tree treeToConcat) {
+    public void concatenaTree(Node targetNode, Tree treeToConcat) {
 
         if (targetNode == null
                 || treeToConcat == null
@@ -286,6 +286,24 @@ public class Tree {
             noIncompleto.setEsquerda(treeToConcat.raiz);
         }
 
+    }
+
+    // Questão 11
+    public void removeSubarvore(Node targetNode) {
+        if (targetNode == null) {
+            return;
+        }
+
+        if (targetNode == this.raiz) {
+            this.raiz = null; // Remove a árvore inteira
+        } else {
+            Node parentNode = this.localizaNodePaiRecursivo(this.raiz, targetNode);
+            if (parentNode.getDireita() == targetNode) {
+                parentNode.setDireita(null);
+            } else {
+                parentNode.setEsquerda(null);
+            }
+        }
     }
 
     public void printPreOrder() {
