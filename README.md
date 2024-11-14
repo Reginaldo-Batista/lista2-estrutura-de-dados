@@ -5,7 +5,6 @@
 - Listas Ligadas
 - Árvores Binárias
 
-
 ## Requisitos
 
 - Java 8 ou superior

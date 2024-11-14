@@ -62,9 +62,10 @@ public class Tree {
         }
 
         if (node.hasLeft() && node.hasRight()) {
-            return this.localizaNoIncompletoRecursivo(Randomize.getRandomBoolean()
-                    ? node.getDireita()
-                    : node.getEsquerda());
+            return this.localizaNoIncompletoRecursivo(
+                    Randomize.getRandomBoolean()
+                            ? node.getDireita()
+                            : node.getEsquerda());
         } else {
             return node;
         }
@@ -160,9 +161,7 @@ public class Tree {
     // Questão 8
     public Lista toListLeefOnly() {
         Lista listaDeFolhas = new Lista();
-
         this.toListLeefOnlyRecursivo(this.raiz, listaDeFolhas);
-
         return listaDeFolhas.inverteLista();
     }
 
@@ -185,7 +184,7 @@ public class Tree {
         }
 
         if (this.raiz == noAlvo) {
-            handleRootRemoval(noAlvo);
+            removeNoRaiz(noAlvo);
             return;
         }
 
@@ -194,14 +193,13 @@ public class Tree {
             return;
         }
 
-        Node filhoElegido = chooseReplacementChild(noAlvo);
+        Node filhoElegido = escolheNoFilho(noAlvo);
 
         if (filhoElegido != null) {
             replaceChild(paiDoAlvo, noAlvo, filhoElegido);
             moveUnchosenChild(noAlvo, filhoElegido);
         }
 
-        clearNodeReferences(noAlvo);
     }
 
     // Questão 9
@@ -222,8 +220,8 @@ public class Tree {
     }
 
     // Questão 9
-    private void handleRootRemoval(Node raiz) {
-        Node filhoElegido = chooseReplacementChild(raiz);
+    private void removeNoRaiz(Node raiz) {
+        Node filhoElegido = escolheNoFilho(raiz);
 
         if (filhoElegido != null) {
             this.raiz = filhoElegido;
@@ -236,11 +234,11 @@ public class Tree {
         } else {
             this.raiz = null;
         }
-        clearNodeReferences(raiz);
+
     }
 
     // Questão 9
-    private Node chooseReplacementChild(Node noPai) {
+    private Node escolheNoFilho(Node noPai) {
         if (noPai.hasRight() && noPai.hasLeft()) {
             return Randomize.getRandomBoolean()
                     ? noPai.getDireita()
@@ -269,12 +267,6 @@ public class Tree {
         } else {
             folhaFilhoElegido.setDireita(alvo.getDireita());
         }
-    }
-
-    // Questão 9
-    private void clearNodeReferences(Node noAlvo) {
-        noAlvo.setDireita(null);
-        noAlvo.setEsquerda(null);
     }
 
     public void printPreOrder() {
