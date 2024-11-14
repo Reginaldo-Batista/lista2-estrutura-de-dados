@@ -1,5 +1,6 @@
 package src.classes;
 
+// TODO verificar se é melhor criar um construtor que inicia a árvore com a raiz null, se sim, alterar o método getTree e addNo.
 // Questão 1
 public class Tree {
 
