@@ -18,7 +18,7 @@
     ```
 2. Navegue até o diretório do projeto:
     ```sh
-    cd /lugar/onde/você/salvou/lista2
+    cd lista2-estrutura-de-dados/
     ```
 3. Compile os arquivos Java:
     ```sh
