@@ -10,6 +10,14 @@ public class Tree {
         this.raiz = new Node(valor);
     }
 
+    public Node getRaiz() {
+        return raiz;
+    }
+
+    public void setRaiz(Node raiz) {
+        this.raiz = raiz;
+    }
+
     // Apenas para facilitar a construção de árvores aleatórias
     public static Tree getTree(int rootValue, int finalSizeOfTree) {
         if (finalSizeOfTree <= 0) {
@@ -280,7 +288,7 @@ public class Tree {
         }
 
         Node noIncompleto = this.localizaNoIncompletoRecursivo(targetNode);
-        
+
         if (!noIncompleto.hasRight()) {
             noIncompleto.setDireita(treeToConcat.raiz);
         } else {
