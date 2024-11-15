@@ -2,6 +2,7 @@ package src.classe_especial;
 
 import src.classes.Node;
 
+// Questão 12
 public class CriteriaTwo extends Criteria {
 
     @Override
