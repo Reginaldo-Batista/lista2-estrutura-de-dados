@@ -6,6 +6,7 @@ import src.classes.Tree;
 // Questão 12
 public class TreeCriteria extends Tree {
 
+    // Pode receber CriteriaOne, CriteriaTwo ou Neuro
     private Criteria criteria;
 
     public Node getNoFilho(Node refNode, int valor) {
