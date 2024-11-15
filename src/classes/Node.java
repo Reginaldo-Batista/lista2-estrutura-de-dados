@@ -6,6 +6,7 @@ public class Node {
     private int valor;
     private Node esquerda;
     private Node direita;
+    private int peso;
 
     public Node(int valor) {
         this.valor = valor;
@@ -37,7 +38,15 @@ public class Node {
         this.direita = direita;
     }
 
-    public boolean hasLeft() {
+    public int getPeso() {
+		return peso;
+	}
+
+	public void setPeso(int peso) {
+		this.peso = peso;
+	}
+
+	public boolean hasLeft() {
         return (this.esquerda != null);
     }
 
