@@ -7,7 +7,7 @@
 
 ## Requisitos
 
-- Java 8 ou superior
+- Java 21
 
 ## Como Executar no Linux
 
